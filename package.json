@@ -1,0 +1,34 @@
+{
+  "name": "github-slugger",
+  "description": "Generate a slug just like GitHub does for markdown headings.",
+  "version": "1.0.0",
+  "author": "Dan Flettre <fletd01@yahoo.com>",
+  "bugs": {
+    "url": "https://github.com/Flet/github-slugger/issues"
+  },
+  "devDependencies": {
+    "standard": "*",
+    "tap-spec": "^4.0.2",
+    "tape": "^4.0.0"
+  },
+  "homepage": "https://github.com/Flet/github-slugger",
+  "keywords": [
+    "anchor",
+    "github",
+    "hash",
+    "heading",
+    "markdown",
+    "slug",
+    "slugger",
+    "url"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Flet/github-slugger.git"
+  },
+  "scripts": {
+    "test": "standard && tape test/*.js | tap-spec"
+  }
+}
