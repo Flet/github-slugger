@@ -4,7 +4,7 @@ function BananaSlug () {
   var self = this
   if (!(self instanceof BananaSlug)) return new BananaSlug()
 
-  self.slugs = []
+  self.reset()
 }
 
 /**
@@ -15,22 +15,21 @@ function BananaSlug () {
 BananaSlug.prototype.slug = function (value) {
   var self = this
   var slug = slugger(value)
-  if (self.slugs.some(slugExists)) {
-    var suffix = '-' + self.slugs.filter(slugMatches).length
-    slug = slug + suffix
+  var occurrences = self.occurrences[slug]
+
+  if (self.occurrences.hasOwnProperty(slug)) {
+    occurrences++
+  } else {
+    occurrences = 0
   }
 
-  self.slugs.push(slug)
+  self.occurrences[slug] = occurrences
+
+  if (occurrences) {
+    slug = slug + '-' + occurrences
+  }
+
   return slug
-
-  function slugMatches (s) {
-    var slugMatch = new RegExp(slug + '(-[0-9])*$')
-    return slugMatch.test(s)
-  }
-
-  function slugExists (s) {
-    return s === slug
-  }
 }
 
 /**
@@ -38,7 +37,7 @@ BananaSlug.prototype.slug = function (value) {
  * @return void
  */
 BananaSlug.prototype.reset = function () {
-  this.slugs = []
+  this.occurrences = {}
 }
 
 var whitespace = /\s/g

@@ -45,6 +45,31 @@ var testCases = [
     slug: 'exchangebind_headersexchange-routing--bindcallback'
   },
   {
+    mesg: 'empty',
+    text: '',
+    slug: ''
+  },
+  {
+    mesg: 'a space',
+    text: ' ',
+    slug: '-1'
+  },
+  {
+    mesg: 'initial space',
+    text: ' initial space',
+    slug: 'initial-space'
+  },
+  {
+    mesg: 'final space',
+    text: 'final space ',
+    slug: 'final-space'
+  },
+  {
+    mesg: 'deals with prototype properties',
+    text: 'length',
+    slug: 'length'
+  },
+  {
     mesg: 'deals with duplicates correctly',
     text: 'duplicate',
     slug: 'duplicate'
