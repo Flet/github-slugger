@@ -1,7 +1,7 @@
 {
   "name": "github-slugger",
   "description": "Generate a slug just like GitHub does for markdown headings.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Dan Flettre <fletd01@yahoo.com>",
   "bugs": {
     "url": "https://github.com/Flet/github-slugger/issues"
