@@ -30,5 +30,8 @@
   },
   "scripts": {
     "test": "standard && tape test/*.js | tap-spec"
+  },
+  "dependencies": {
+    "wemoji": "^1.0.0"
   }
 }
