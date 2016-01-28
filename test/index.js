@@ -83,5 +83,20 @@ var testCases = [
     mesg: 'deals with duplicates correctly-2',
     text: 'duplicate',
     slug: 'duplicate-2'
+  },
+  {
+    mesg: 'handles emoji',
+    text: 'emoji 👌 test',
+    slug: 'emoji-ok_hand-test'
+  },
+  {
+    mesg: 'handles emojis without space between',
+    text: '👌🐥',
+    slug: 'ok_handhatched_chick'
+  },
+  {
+    mesg: 'handles emojis with space between',
+    text: 'emoji 👌 🐥',
+    slug: 'emoji-ok_hand-hatched_chick'
   }
 ]

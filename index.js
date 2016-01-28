@@ -1,5 +1,7 @@
 module.exports = BananaSlug
 
+var wemoji = require('wemoji')
+
 function BananaSlug () {
   var self = this
   if (!(self instanceof BananaSlug)) return new BananaSlug()
@@ -42,6 +44,21 @@ BananaSlug.prototype.reset = function () {
 
 var whitespace = /\s/g
 
+function convertEmoji (string) {
+  for (var idx = 0; idx < string.length; idx++) {
+    // inspect two characters at a time because indexing characters in JavaScript
+    // strings like this ends up splitting the unicode code points up
+    // (see https://mathiasbynens.be/notes/javascript-unicode)
+    var emoji = wemoji.unicode[string[idx] + string[idx + 1]]
+    if (emoji) {
+      string = string.substring(0, idx) + emoji.name + string.substring(idx + 1)
+      idx += emoji.name.length
+    }
+  }
+
+  return string
+}
+
 function slugger (string) {
   var allowedCharacters = 'A-Za-z0-9_ -'
   var re = new RegExp('[^' + allowedCharacters + ']', 'g')
@@ -51,6 +68,6 @@ function slugger (string) {
 
   if (typeof string !== 'string') return ''
   if (!maintainCase) string = string.toLowerCase()
-  result = string.trim().replace(re, '').replace(whitespace, replacement)
+  result = convertEmoji(string.trim()).replace(re, '').replace(whitespace, replacement)
   return result
 }
