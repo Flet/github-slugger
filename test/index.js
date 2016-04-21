@@ -83,5 +83,10 @@ var testCases = [
     mesg: 'deals with duplicates correctly-2',
     text: 'duplicate',
     slug: 'duplicate-2'
+  },
+  {
+    mesg: 'deals with non-latin chars',
+    text: 'Привет',
+    slug: 'привет'
   }
 ]

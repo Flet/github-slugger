@@ -43,8 +43,7 @@ BananaSlug.prototype.reset = function () {
 var whitespace = /\s/g
 
 function slugger (string) {
-  var allowedCharacters = 'A-Za-z0-9_ -'
-  var re = new RegExp('[^' + allowedCharacters + ']', 'g')
+  var re = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;<=>?@\[\]^`{|}~]/g
   var maintainCase = false
   var replacement = '-'
   var result
