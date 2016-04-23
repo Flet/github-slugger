@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.1.0 
-* Feature: Support for non-latin characters in slugs https://github.com/Flet/github-slugger/pull/2) Thanks [@tadatuta](https://github.com/tadatuta)!
+* Feature: Support for non-latin characters in slugs https://github.com/Flet/github-slugger/pull/3) Thanks [@tadatuta](https://github.com/tadatuta)!
 
 ## 1.0.1
 * Fix: bug for multiple empty slugds (https://github.com/Flet/github-slugger/pull/1) Thanks [@wooorm](https://github.com/wooorm)!
