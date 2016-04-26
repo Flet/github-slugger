@@ -1,3 +1,5 @@
+var emoji = require('emoji-regex')
+
 module.exports = BananaSlug
 
 function BananaSlug () {
@@ -42,14 +44,19 @@ BananaSlug.prototype.reset = function () {
 
 var whitespace = /\s/g
 
+function lower (string) {
+  return string.toLowerCase()
+}
+
 function slugger (string) {
   var re = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;<=>?@\[\]^`{|}~]/g
   var maintainCase = false
   var replacement = '-'
-  var result
 
   if (typeof string !== 'string') return ''
-  if (!maintainCase) string = string.toLowerCase()
-  result = string.trim().replace(re, '').replace(whitespace, replacement)
-  return result
+  if (!maintainCase) string = string.replace(/[A-Z]+/g, lower)
+  return string.trim()
+    .replace(re, '')
+    .replace(emoji(), '')
+    .replace(whitespace, replacement)
 }
