@@ -49,7 +49,7 @@ function lower (string) {
 }
 
 function slugger (string) {
-  var re = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;<=>?@\[\]^`{|}~]/g
+  var re = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g
   var maintainCase = false
   var replacement = '-'
 
