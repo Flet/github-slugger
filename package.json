@@ -11,7 +11,7 @@
     "url": "https://github.com/Flet/github-slugger/issues"
   },
   "dependencies": {
-    "emoji-regex": "^>=6.0.0 <=6.1.1"
+    "emoji-regex": ">=6.0.0 <=6.1.1"
   },
   "devDependencies": {
     "standard": "*",
