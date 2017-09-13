@@ -10,6 +10,8 @@ test('simple stuff', function (t) {
 
   slugger.reset()
   t.equals('foo', slugger.slug('foo'))
+  t.equals('fooCamelCase', slugger.slug('fooCamelCase', true))
+  t.equals('foocamelcase', slugger.slug('fooCamelCase'))
 
   t.end()
 })
