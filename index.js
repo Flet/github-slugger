@@ -12,11 +12,13 @@ function BananaSlug () {
 /**
  * Generate a unique slug.
  * @param  {string} value String of text to slugify
+ * @param  {boolean} [false] Keep the current case, otherwise make all lowercase
  * @return {string}       A unique slug string
  */
-BananaSlug.prototype.slug = function (value) {
+BananaSlug.prototype.slug = function (value, maintainCase) {
+  maintainCase = maintainCase === true
   var self = this
-  var slug = slugger(value)
+  var slug = slugger(value, maintainCase)
   var occurrences = self.occurrences[slug]
 
   if (self.occurrences.hasOwnProperty(slug)) {
@@ -48,9 +50,8 @@ function lower (string) {
   return string.toLowerCase()
 }
 
-function slugger (string) {
+function slugger (string, maintainCase) {
   var re = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g
-  var maintainCase = false
   var replacement = '-'
 
   if (typeof string !== 'string') return ''
