@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.0 2017-09-21
+* Add `maintainCase` support
+
 ## 1.1.3 2017-05-29
 * Fix`emoji-regex` semver version to ensure npm5 compatibility.
 
