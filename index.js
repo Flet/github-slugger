@@ -21,7 +21,7 @@ BananaSlug.prototype.slug = function (value, maintainCase) {
   var slug = slugger(value, maintainCase)
   var occurrences = self.occurrences[slug]
 
-  if (self.occurrences.hasOwnProperty(slug)) {
+  if (Object.hasOwnProperty.call(self.occurrences, slug)) {
     occurrences++
   } else {
     occurrences = 0
@@ -41,7 +41,7 @@ BananaSlug.prototype.slug = function (value, maintainCase) {
  * @return void
  */
 BananaSlug.prototype.reset = function () {
-  this.occurrences = {}
+  this.occurrences = Object.create(null)
 }
 
 var whitespace = /\s/g
