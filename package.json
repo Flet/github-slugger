@@ -10,6 +10,9 @@
   "bugs": {
     "url": "https://github.com/Flet/github-slugger/issues"
   },
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "emoji-regex": ">=6.0.0 <=6.1.1"
   },
