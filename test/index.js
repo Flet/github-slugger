@@ -28,7 +28,7 @@ test('matching slugs', function (t) {
   slugger.reset()
   t.equals('foo-1', slugger.slug('foo-1'))
   t.equals('foo', slugger.slug('foo'))
-  t.equals('foo-1-1', slugger.slug('foo'))
+  t.equals('foo-2', slugger.slug('foo'))
 
   t.end()
 })

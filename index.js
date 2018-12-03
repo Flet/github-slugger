@@ -19,18 +19,18 @@ BananaSlug.prototype.slug = function (value, maintainCase) {
   maintainCase = maintainCase === true
   var self = this
   var slug = slugger(value, maintainCase)
-  var occurrences = self.occurrences[slug]
+  var originalSlug = slug
+  var occurrences = 0
 
-  if (self.occurrences.hasOwnProperty(slug)) {
-    occurrences++
+  if (self.occurrences.hasOwnProperty(originalSlug)) {
+    do {
+      occurrences = self.occurrences[originalSlug] + 1
+      self.occurrences[originalSlug] = occurrences
+      slug = originalSlug + '-' + occurrences
+    } while (self.occurrences.hasOwnProperty(slug))
+    self.occurrences[slug] = 0
   } else {
-    occurrences = 0
-  }
-
-  self.occurrences[slug] = occurrences
-
-  if (occurrences) {
-    slug = self.slug(slug + '-' + occurrences, maintainCase)
+    self.occurrences[originalSlug] = occurrences
   }
 
   return slug
