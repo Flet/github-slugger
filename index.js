@@ -30,7 +30,7 @@ BananaSlug.prototype.slug = function (value, maintainCase) {
   self.occurrences[slug] = occurrences
 
   if (occurrences) {
-    slug = slug + '-' + occurrences
+    slug = self.slug(slug + '-' + occurrences, maintainCase)
   }
 
   return slug
