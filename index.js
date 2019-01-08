@@ -2,8 +2,13 @@ var emoji = require('emoji-regex')
 
 module.exports = BananaSlug
 
+var own = Object.hasOwnProperty
+var whitespace = /\s/g
+var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g
+
 function BananaSlug () {
   var self = this
+
   if (!(self instanceof BananaSlug)) return new BananaSlug()
 
   self.reset()
@@ -16,16 +21,13 @@ function BananaSlug () {
  * @return {string}       A unique slug string
  */
 BananaSlug.prototype.slug = function (value, maintainCase) {
-  maintainCase = maintainCase === true
   var self = this
-  var slug = slugger(value, maintainCase)
+  var slug = slugger(value, maintainCase === true)
+  var originalSlug = slug
 
-  if (Object.hasOwnProperty.call(self.occurrences, slug)) {
-    var originalSlug = slug
-    do {
-      self.occurrences[originalSlug]++
-      slug = originalSlug + '-' + self.occurrences[originalSlug]
-    } while (Object.hasOwnProperty.call(self.occurrences, slug))
+  while (own.call(self.occurrences, slug)) {
+    self.occurrences[originalSlug]++
+    slug = originalSlug + '-' + self.occurrences[originalSlug]
   }
 
   self.occurrences[slug] = 0
@@ -41,16 +43,12 @@ BananaSlug.prototype.reset = function () {
   this.occurrences = Object.create(null)
 }
 
-var whitespace = /\s/g
-
 function slugger (string, maintainCase) {
-  var re = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g
-  var replacement = '-'
-
   if (typeof string !== 'string') return ''
   if (!maintainCase) string = string.toLowerCase()
+
   return string.trim()
-    .replace(re, '')
+    .replace(specials, '')
     .replace(emoji(), '')
-    .replace(whitespace, replacement)
+    .replace(whitespace, '-')
 }
