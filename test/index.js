@@ -22,6 +22,23 @@ test('simple stuff', function (t) {
   t.end()
 })
 
+test('matching slugs', function (t) {
+  var slugger = new GithubSlugger()
+
+  t.equals('foo', slugger.slug('foo'))
+  t.equals('foo-1', slugger.slug('foo'))
+  t.equals('foo-1-1', slugger.slug('foo 1'))
+  t.equals('foo-1-2', slugger.slug('foo-1'))
+  t.equals('foo-2', slugger.slug('foo'))
+
+  slugger.reset()
+  t.equals('foo-1', slugger.slug('foo-1'))
+  t.equals('foo', slugger.slug('foo'))
+  t.equals('foo-2', slugger.slug('foo'))
+
+  t.end()
+})
+
 test('github test cases', function (t) {
   var slugger = new GithubSlugger()
 
