@@ -13,6 +13,12 @@ test('simple stuff', function (t) {
   t.equals('fooCamelCase', slugger.slug('fooCamelCase', true))
   t.equals('foocamelcase', slugger.slug('fooCamelCase'))
 
+  slugger.reset()
+  t.equals('__proto__', slugger.slug('__proto__'))
+  t.equals('__proto__-1', slugger.slug('__proto__'))
+  t.equals('hasOwnProperty', slugger.slug('hasOwnProperty', true))
+  t.equals('foo', slugger.slug('foo'))
+
   t.end()
 })
 
@@ -106,7 +112,7 @@ var testCases = [
   {
     mesg: 'deals with non-latin chars',
     text: 'Привет',
-    slug: 'Привет'
+    slug: 'привет'
   },
   // https://github.com/wooorm/gh-and-npm-slug-generation
   {
@@ -177,7 +183,7 @@ var testCases = [
   {
     mesg: 'gh-and-npm-slug-generation-14',
     text: 'Привет non-latin 你好',
-    slug: 'Привет-non-latin-你好'
+    slug: 'привет-non-latin-你好'
   },
   // https://github.com/chrisdickinson/emoji-slug-example
   {
@@ -199,5 +205,10 @@ var testCases = [
     mesg: 'emoji-slug-example-4',
     text: ':ok_hand: :hatched_chick: Two in a row',
     slug: 'ok_hand-hatched_chick-two-in-a-row'
+  },
+  {
+    mesg: 'Cyrillic',
+    text: 'Профили пользователей',
+    slug: 'профили-пользователей'
   }
 ]

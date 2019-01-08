@@ -20,12 +20,12 @@ BananaSlug.prototype.slug = function (value, maintainCase) {
   var self = this
   var slug = slugger(value, maintainCase)
 
-  if (self.occurrences.hasOwnProperty(slug)) {
+  if (Object.hasOwnProperty.call(self.occurrences, slug)) {
     var originalSlug = slug
     do {
       self.occurrences[originalSlug]++
       slug = originalSlug + '-' + self.occurrences[originalSlug]
-    } while (self.occurrences.hasOwnProperty(slug))
+    } while (Object.hasOwnProperty.call(self.occurrences, slug))
   }
 
   self.occurrences[slug] = 0
@@ -38,21 +38,17 @@ BananaSlug.prototype.slug = function (value, maintainCase) {
  * @return void
  */
 BananaSlug.prototype.reset = function () {
-  this.occurrences = {}
+  this.occurrences = Object.create(null)
 }
 
 var whitespace = /\s/g
-
-function lower (string) {
-  return string.toLowerCase()
-}
 
 function slugger (string, maintainCase) {
   var re = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g
   var replacement = '-'
 
   if (typeof string !== 'string') return ''
-  if (!maintainCase) string = string.replace(/[A-Z]+/g, lower)
+  if (!maintainCase) string = string.toLowerCase()
   return string.trim()
     .replace(re, '')
     .replace(emoji(), '')
