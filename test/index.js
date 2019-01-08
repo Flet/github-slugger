@@ -4,23 +4,27 @@ var GithubSlugger = require('../')
 test('simple stuff', function (t) {
   var slugger = new GithubSlugger()
 
+  t.equals(GithubSlugger().slug('foo'), 'foo', 'should work without new')
+  t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
+
+  // See `1-basic-usage.md`
   t.equals(slugger.slug('foo'), 'foo')
   t.equals(slugger.slug('foo bar'), 'foo-bar')
   t.equals(slugger.slug('foo'), 'foo-1')
 
+  // See `2-camel-case.md`
   slugger.reset()
   t.equals(slugger.slug('foo'), 'foo')
-  t.equals(slugger.slug('fooCamelCase', true), 'fooCamelCase')
-  t.equals(slugger.slug('fooCamelCase'), 'foocamelcase')
+  // Note: GH doesn’t support `maintaincase`, so the actual values are commented below.
+  t.equals(slugger.slug('fooCamelCase', true), 'fooCamelCase') // foocamelcase
+  t.equals(slugger.slug('fooCamelCase'), 'foocamelcase') // foocamelcase-1
 
+  // See `3-prototype.md`
   slugger.reset()
   t.equals(slugger.slug('__proto__'), '__proto__')
   t.equals(slugger.slug('__proto__'), '__proto__-1')
-  t.equals(slugger.slug('hasOwnProperty', true), 'hasOwnProperty')
+  t.equals(slugger.slug('hasOwnProperty', true), 'hasOwnProperty') // hasownproperty
   t.equals(slugger.slug('foo'), 'foo')
-
-  t.equals(GithubSlugger().slug('foo'), 'foo', 'should work without new')
-  t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
 
   t.end()
 })
@@ -28,12 +32,14 @@ test('simple stuff', function (t) {
 test('matching slugs', function (t) {
   var slugger = new GithubSlugger()
 
+  // See `4-matching-slugs-basic.md`
   t.equals(slugger.slug('foo'), 'foo')
   t.equals(slugger.slug('foo'), 'foo-1')
   t.equals(slugger.slug('foo 1'), 'foo-1-1')
   t.equals(slugger.slug('foo-1'), 'foo-1-2')
   t.equals(slugger.slug('foo'), 'foo-2')
 
+  // See `5-matching-slugs-again.md`
   slugger.reset()
   t.equals(slugger.slug('foo-1'), 'foo-1')
   t.equals(slugger.slug('foo'), 'foo')
@@ -48,10 +54,12 @@ test('github test cases', function (t) {
   testCases.forEach(function (test) {
     t.equals(slugger.slug(test.text), test.slug, test.mesg)
   })
+
   t.end()
 })
 
 var testCases = [
+  // See `6-characters.md`
   {
     mesg: 'allows a dash',
     text: 'heading with a - dash',
@@ -72,6 +80,7 @@ var testCases = [
     text: 'exchange.bind_headers(exchange, routing [, bindCallback])',
     slug: 'exchangebind_headersexchange-routing--bindcallback'
   },
+  // Note: GH doesn’t create slugs for empty headings.
   {
     mesg: 'empty',
     text: '',
@@ -82,6 +91,7 @@ var testCases = [
     text: ' ',
     slug: '-1'
   },
+  // Note: white-space in headings is trimmed off in markdown.
   {
     mesg: 'initial space',
     text: ' initial space',
@@ -92,11 +102,7 @@ var testCases = [
     text: 'final space ',
     slug: 'final-space'
   },
-  {
-    mesg: 'deals with prototype properties',
-    text: 'length',
-    slug: 'length'
-  },
+  // See `7-duplicates.md`
   {
     mesg: 'deals with duplicates correctly',
     text: 'duplicates',
@@ -112,12 +118,7 @@ var testCases = [
     text: 'duplicates',
     slug: 'duplicates-2'
   },
-  {
-    mesg: 'deals with non-latin chars',
-    text: 'Привет',
-    slug: 'привет'
-  },
-  // https://github.com/wooorm/gh-and-npm-slug-generation
+  // See `8-non-ascii.md`
   {
     mesg: 'gh-and-npm-slug-generation-1',
     text: 'I ♥ unicode',
@@ -164,31 +165,21 @@ var testCases = [
     slug: 'smile---a-gemoji'
   },
   {
-    mesg: 'gh-and-npm-slug-generation-10',
-    text: '    Initial spaces',
-    slug: 'initial-spaces'
+    mesg: 'deals with non-latin chars',
+    text: 'Привет',
+    slug: 'привет'
   },
   {
-    mesg: 'gh-and-npm-slug-generation-11',
-    text: 'Final spaces   ',
-    slug: 'final-spaces'
+    mesg: 'Cyrillic',
+    text: 'Профили пользователей',
+    slug: 'профили-пользователей'
   },
   {
-    mesg: 'gh-and-npm-slug-generation-12',
-    text: 'duplicate',
-    slug: 'duplicate'
-  },
-  {
-    mesg: 'gh-and-npm-slug-generation-13',
-    text: 'duplicate',
-    slug: 'duplicate-1'
-  },
-  {
-    mesg: 'gh-and-npm-slug-generation-14',
+    mesg: 'More non-latin',
     text: 'Привет non-latin 你好',
     slug: 'привет-non-latin-你好'
   },
-  // https://github.com/chrisdickinson/emoji-slug-example
+  // See `9-emoji.md`
   {
     mesg: 'emoji-slug-example-1',
     text: ':ok: No underscore',
@@ -208,10 +199,5 @@ var testCases = [
     mesg: 'emoji-slug-example-4',
     text: ':ok_hand: :hatched_chick: Two in a row',
     slug: 'ok_hand-hatched_chick-two-in-a-row'
-  },
-  {
-    mesg: 'Cyrillic',
-    text: 'Профили пользователей',
-    slug: 'профили-пользователей'
   }
 ]
