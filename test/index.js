@@ -19,6 +19,9 @@ test('simple stuff', function (t) {
   t.equals(slugger.slug('hasOwnProperty', true), 'hasOwnProperty')
   t.equals(slugger.slug('foo'), 'foo')
 
+  t.equals(GithubSlugger().slug('foo'), 'foo', 'should work without new')
+  t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
+
   t.end()
 })
 
