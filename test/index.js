@@ -13,6 +13,12 @@ test('simple stuff', function (t) {
   t.equals('fooCamelCase', slugger.slug('fooCamelCase', true))
   t.equals('foocamelcase', slugger.slug('fooCamelCase'))
 
+  slugger.reset()
+  t.equals('__proto__', slugger.slug('__proto__'))
+  t.equals('__proto__-1', slugger.slug('__proto__'))
+  t.equals('hasOwnProperty', slugger.slug('hasOwnProperty', true))
+  t.equals('foo', slugger.slug('foo'))
+
   t.end()
 })
 
