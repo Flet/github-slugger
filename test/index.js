@@ -102,6 +102,12 @@ var testCases = [
     text: 'final space ',
     slug: 'final-space'
   },
+  // Note: Apostrophe in heading is trimmed off in markdown
+  {
+    mesg: 'apostrophe’s should be trimmed',
+    text: 'apostrophe’s should be trimmed',
+    slug: 'apostrophes-should-be-trimmed'
+  },
   // See `7-duplicates.md`
   {
     mesg: 'deals with duplicates correctly',
