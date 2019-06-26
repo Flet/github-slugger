@@ -1,4 +1,4 @@
-var emoji = require('emoji-regex')
+var unicodeRegex = require('./_generated_unicode_regex')
 
 module.exports = BananaSlug
 
@@ -49,6 +49,6 @@ function slugger (string, maintainCase) {
 
   return string.trim()
     .replace(specials, '')
-    .replace(emoji(), '')
+    .replace(unicodeRegex(), '')
     .replace(whitespace, '-')
 }
