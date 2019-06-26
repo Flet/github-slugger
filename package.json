@@ -17,7 +17,7 @@
     "emoji-regex": ">=6.0.0 <=6.1.1"
   },
   "devDependencies": {
-    "nyc": "^13.1.0",
+    "nyc": "^14.1.1",
     "standard": "*",
     "tap-spec": "^5.0.0",
     "tape": "^4.0.0"
