@@ -205,5 +205,10 @@ var testCases = [
     mesg: 'emoji-slug-example-4',
     text: ':ok_hand: :hatched_chick: Two in a row',
     slug: 'ok_hand-hatched_chick-two-in-a-row'
+  },
+  {
+    mesg: 'html-entities',
+    text: '&lt;div&gt; elements',
+    slug: 'div-elements'
   }
 ]
