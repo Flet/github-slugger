@@ -1,60 +1,37 @@
 var test = require('tape')
 var GithubSlugger = require('../')
 
-require('./test-static')
+test('static method - simple stuff', function (t) {
+  var slug = GithubSlugger.slug
 
-test('simple stuff', function (t) {
-  var slugger = new GithubSlugger()
-
-  t.equals(GithubSlugger().slug('foo'), 'foo', 'should work without new')
-  t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
+  t.equals(slug('foo'), 'foo', 'should work without new')
+  t.equals(slug(1), '', 'should return empty string for non-strings')
 
   // See `1-basic-usage.md`
-  t.equals(slugger.slug('foo'), 'foo')
-  t.equals(slugger.slug('foo bar'), 'foo-bar')
-  t.equals(slugger.slug('foo'), 'foo-1')
+  t.equals(slug('foo'), 'foo')
+  t.equals(slug('foo bar'), 'foo-bar')
+  t.equals(slug('foo'), 'foo') // idem potent
 
   // See `2-camel-case.md`
-  slugger.reset()
-  t.equals(slugger.slug('foo'), 'foo')
+  t.equals(slug('foo'), 'foo')
   // Note: GH doesn’t support `maintaincase`, so the actual values are commented below.
-  t.equals(slugger.slug('fooCamelCase', true), 'fooCamelCase') // foocamelcase
-  t.equals(slugger.slug('fooCamelCase'), 'foocamelcase') // foocamelcase-1
+  t.equals(slug('fooCamelCase', true), 'fooCamelCase') // foocamelcase
+  t.equals(slug('fooCamelCase'), 'foocamelcase') // foocamelcase-1
 
   // See `3-prototype.md`
-  slugger.reset()
-  t.equals(slugger.slug('__proto__'), '__proto__')
-  t.equals(slugger.slug('__proto__'), '__proto__-1')
-  t.equals(slugger.slug('hasOwnProperty', true), 'hasOwnProperty') // hasownproperty
-  t.equals(slugger.slug('foo'), 'foo')
+  t.equals(slug('__proto__'), '__proto__')
+  t.equals(slug('__proto__'), '__proto__')
+  t.equals(slug('hasOwnProperty', true), 'hasOwnProperty') // hasownproperty
+  t.equals(slug('foo'), 'foo')
 
   t.end()
 })
 
-test('matching slugs', function (t) {
-  var slugger = new GithubSlugger()
-
-  // See `4-matching-slugs-basic.md`
-  t.equals(slugger.slug('foo'), 'foo')
-  t.equals(slugger.slug('foo'), 'foo-1')
-  t.equals(slugger.slug('foo 1'), 'foo-1-1')
-  t.equals(slugger.slug('foo-1'), 'foo-1-2')
-  t.equals(slugger.slug('foo'), 'foo-2')
-
-  // See `5-matching-slugs-again.md`
-  slugger.reset()
-  t.equals(slugger.slug('foo-1'), 'foo-1')
-  t.equals(slugger.slug('foo'), 'foo')
-  t.equals(slugger.slug('foo'), 'foo-2')
-
-  t.end()
-})
-
-test('github test cases', function (t) {
-  var slugger = new GithubSlugger()
+test('static method - github test cases', function (t) {
+  var slug = GithubSlugger.slug
 
   testCases.forEach(function (test) {
-    t.equals(slugger.slug(test.text), test.slug, test.mesg)
+    t.equals(slug(test.text), test.slug, test.mesg)
   })
 
   t.end()
@@ -88,11 +65,6 @@ var testCases = [
     text: '',
     slug: ''
   },
-  {
-    mesg: 'a space',
-    text: ' ',
-    slug: '-1'
-  },
   // Note: white-space in headings is trimmed off in markdown.
   {
     mesg: 'initial space',
@@ -109,22 +81,6 @@ var testCases = [
     mesg: 'apostrophe’s should be trimmed',
     text: 'apostrophe’s should be trimmed',
     slug: 'apostrophes-should-be-trimmed'
-  },
-  // See `7-duplicates.md`
-  {
-    mesg: 'deals with duplicates correctly',
-    text: 'duplicates',
-    slug: 'duplicates'
-  },
-  {
-    mesg: 'deals with duplicates correctly-1',
-    text: 'duplicates',
-    slug: 'duplicates-1'
-  },
-  {
-    mesg: 'deals with duplicates correctly-2',
-    text: 'duplicates',
-    slug: 'duplicates-2'
   },
   // See `8-non-ascii.md`
   {

@@ -52,3 +52,5 @@ function slugger (string, maintainCase) {
     .replace(emoji(), '')
     .replace(whitespace, '-')
 }
+
+BananaSlug.slug = slugger

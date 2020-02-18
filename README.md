@@ -42,6 +42,19 @@ slugger.slug('foo')
 ```
 Check `test/index.js` for more examples.
 
+If you need, you can also use the underlying implementation which does not keep
+track of the previously slugged strings (not recommended):
+
+```js
+var slugger = require('github-slugger').slug;
+
+slug('foo bar baz')
+// returns 'foo-bar-baz'
+
+slug('foo bar baz')
+// returns the same slug 'foo-bar-baz' because it does not keep track
+```
+
 ## Contributing
 
 Contributions welcome! Please read the [contributing guidelines](CONTRIBUTING.md) first.
