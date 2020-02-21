@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.3.0 2020-02-21
+* Expose static slug function for folks who do not want/need the stateful bits (Thanks [@bobbylito](https://github.com/bobylito)!).
+
 ## 1.2.1 2019-xx-xx
 * Fix collisions for slugs with occurrences
 * Fix accessing `Object.prototype` methods
