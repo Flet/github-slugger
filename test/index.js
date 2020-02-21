@@ -1,6 +1,8 @@
 var test = require('tape')
 var GithubSlugger = require('../')
 
+require('./test-static')
+
 test('simple stuff', function (t) {
   var slugger = new GithubSlugger()
 
