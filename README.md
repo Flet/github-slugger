@@ -10,6 +10,10 @@
 
 Generate a slug just like GitHub does for markdown headings. It also ensures slugs are unique in the same way GitHub does it. The overall goal of this package is to emulate the way GitHub handles generating markdown heading anchors as close as possible.
 
+This project is not a Markdown or HTML parser: passing `alpha *bravo* charlie`
+or `alpha <em>bravo</em> charlie` doesn’t work.
+Instead pass the plain text value of the heading: `alpha bravo charlie`.
+
 ## Install
 
 ```
