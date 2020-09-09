@@ -50,7 +50,7 @@ If you need, you can also use the underlying implementation which does not keep
 track of the previously slugged strings (not recommended):
 
 ```js
-var slugger = require('github-slugger').slug;
+var slug = require('github-slugger').slug;
 
 slug('foo bar baz')
 // returns 'foo-bar-baz'
