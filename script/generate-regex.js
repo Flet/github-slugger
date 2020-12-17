@@ -4,25 +4,15 @@ const path = require('path')
 const regenerate = require('regenerate')
 
 const set = regenerate()
-  .add(require('unicode-12.1.0/General_Category/Close_Punctuation/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Control/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Currency_Symbol/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Dash_Punctuation/code-points.js'))
-  .remove('-') // Except Hyphen-Minus
-  .add(require('unicode-12.1.0/General_Category/Final_Punctuation/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Format/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Initial_Punctuation/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Line_Separator/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Math_Symbol/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Modifier_Symbol/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Open_Punctuation/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Other_Number/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Other_Punctuation/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Other_Symbol/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Paragraph_Separator/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Private_Use/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Surrogate/code-points.js'))
-  .add(require('unicode-12.1.0/General_Category/Unassigned/code-points.js'))
+  .addRange(0x0, 0x10ffff) // Everything
+  .remove(require('unicode-12.1.0/Binary_Property/Alphabetic/code-points.js')) // Overlaps General_Category/Other_Symbol
+  .remove(require('unicode-12.1.0/General_Category/Connector_Punctuation/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Decimal_Number/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Enclosing_Mark/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Nonspacing_Mark/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Space_Separator/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Spacing_Mark/code-points.js'))
+  .remove('-') // General_Category/Dash_Punctuation exception
 
 console.log(`/${set.toString()}/g`)
 // Then you might want to use a template like this to write the result to a file, along with any regex flags you might need:

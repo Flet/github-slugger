@@ -217,7 +217,7 @@ var testCases = [
   require('./General_Category/Format.json'),
   require('./General_Category/Initial_Punctuation.json'),
   require('./General_Category/Letter_Number.json'),
-  //require('./General_Category/Line_Separator.json'),
+  //require('./General_Category/Line_Separator.json'), // Presumably d/t .trim()? Not worth fixing?
   require('./General_Category/Lowercase_Letter.json'),
   require('./General_Category/Math_Symbol.json'),
   require('./General_Category/Modifier_Letter.json'),
@@ -227,12 +227,12 @@ var testCases = [
   require('./General_Category/Other_Letter.json'),
   require('./General_Category/Other_Number.json'),
   require('./General_Category/Other_Punctuation.json'),
-  //require('./General_Category/Other_Symbol.json'),
-  //require('./General_Category/Paragraph_Separator.json'),
+  require('./General_Category/Other_Symbol.json'),
+  //require('./General_Category/Paragraph_Separator.json'), // Presumably d/t .trim()? Not worth fixing?
   require('./General_Category/Private_Use.json'),
-  //require('./General_Category/Space_Separator.json'),
+  //require('./General_Category/Space_Separator.json'), // Presumably d/t .trim()? Not worth fixing?
   require('./General_Category/Spacing_Mark.json'),
-  //require('./General_Category/Surrogate.json'),
+  //require('./General_Category/Surrogate.json'), // Not sure why I can't strip U+DFFF?
   require('./General_Category/Titlecase_Letter.json'),
   require('./General_Category/Unassigned.json'),
   require('./General_Category/Uppercase_Letter.json'),
