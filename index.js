@@ -4,7 +4,6 @@ module.exports = BananaSlug
 
 var own = Object.hasOwnProperty
 var whitespace = /\s/g
-var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
 
 function BananaSlug () {
   var self = this
@@ -48,7 +47,6 @@ function slugger (string, maintainCase) {
   if (!maintainCase) string = string.toLowerCase()
 
   return string.trim()
-    .replace(specials, '')
     .replace(unicodeRegex(), '')
     .replace(whitespace, '-')
 }

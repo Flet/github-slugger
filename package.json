@@ -50,5 +50,8 @@
     "lines": 100,
     "functions": 100,
     "branches": 100
+  },
+  "standard": {
+    "ignore": "_generated_unicode_regex.js"
   }
 }
