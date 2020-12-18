@@ -4,17 +4,15 @@ const path = require('path')
 const regenerate = require('regenerate')
 
 const set = regenerate()
-  .add(require('unicode-12.1.0/Sequence_Property/Basic_Emoji/index.js'))
-  .add(require('unicode-12.1.0/Sequence_Property/Emoji_Flag_Sequence/index.js'))
-  .add(require('unicode-12.1.0/Sequence_Property/Emoji_Modifier_Sequence/index.js'))
-  .add(require('unicode-12.1.0/Sequence_Property/Emoji_Tag_Sequence/index.js'))
-  .add(require('unicode-12.1.0/Sequence_Property/Emoji_ZWJ_Sequence/index.js'))
-  .add(require('unicode-12.1.0/Block/Miscellaneous_Mathematical_Symbols_A/code-points.js'))
-  .add(require('unicode-12.1.0/Block/Miscellaneous_Mathematical_Symbols_B/code-points.js'))
-  .add(require('unicode-12.1.0/Block/Miscellaneous_Symbols/code-points.js'))
-  .add(require('unicode-12.1.0/Block/Miscellaneous_Symbols_And_Arrows/code-points.js'))
-  .add(require('unicode-12.1.0/Block/Miscellaneous_Symbols_And_Pictographs/code-points.js'))
-  .add(require('unicode-12.1.0/Block/Miscellaneous_Technical/code-points.js'))
+  .addRange(0x0, 0x10ffff) // Everything
+  .remove(require('unicode-12.1.0/Binary_Property/Alphabetic/code-points.js')) // Overlaps General_Category/Other_Symbol
+  .remove(require('unicode-12.1.0/General_Category/Connector_Punctuation/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Decimal_Number/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Enclosing_Mark/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Nonspacing_Mark/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Space_Separator/code-points.js'))
+  .remove(require('unicode-12.1.0/General_Category/Spacing_Mark/code-points.js'))
+  .remove('-') // General_Category/Dash_Punctuation exception
 
 console.log(`/${set.toString()}/g`)
 // Then you might want to use a template like this to write the result to a file, along with any regex flags you might need:
