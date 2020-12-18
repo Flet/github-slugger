@@ -235,5 +235,7 @@ var testCases = [
   //require('./General_Category/Surrogate.json'), // Not sure why I can't strip U+DFFF?
   require('./General_Category/Titlecase_Letter.json'),
   require('./General_Category/Unassigned.json'),
-  require('./General_Category/Uppercase_Letter.json'),
-]
+  // ICU >= 62 for .toLowerCase(). U+1C90, etc. were added in Unicode 11
+  // i.e. ICU 62.
+  process.versions.icu >= 62 && require('./General_Category/Uppercase_Letter.json'),
+].filter(Boolean)
