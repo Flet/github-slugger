@@ -11,16 +11,23 @@
     "url": "https://github.com/Flet/github-slugger/issues"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "regex.js"
   ],
-  "dependencies": {
-    "emoji-regex": ">=6.0.0 <=6.1.1"
-  },
   "devDependencies": {
+    "@octokit/rest": "^18.0.0",
+    "@unicode/unicode-12.1.0": "^1.0.0",
+    "hast-util-select": "^5.0.0",
+    "mdast-util-gfm": "^1.0.0",
+    "mdast-util-to-markdown": "^1.0.0",
+    "node-fetch": "^2.0.0",
     "nyc": "^15.0.0",
+    "regenerate": "^1.0.0",
+    "rehype-parse": "^8.0.0",
     "standard": "*",
     "tap-spec": "^5.0.0",
-    "tape": "^4.0.0"
+    "tape": "^4.0.0",
+    "unified": "^10.0.0"
   },
   "homepage": "https://github.com/Flet/github-slugger",
   "keywords": [
