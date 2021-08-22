@@ -1,8 +1,8 @@
-var test = require('tape')
-var GithubSlugger = require('../')
+const test = require('tape')
+const GithubSlugger = require('../')
 
 test('static method - simple stuff', function (t) {
-  var slug = GithubSlugger.slug
+  const slug = GithubSlugger.slug
 
   // See `1-basic-usage.md`
   t.equals(slug('foo'), 'foo')
@@ -20,7 +20,7 @@ test('static method - simple stuff', function (t) {
 })
 
 test('static method - yielding empty strings', function (t) {
-  var slug = GithubSlugger.slug
+  const slug = GithubSlugger.slug
 
   t.equals(slug(1), '', 'should return empty string for non-strings')
   t.equals(slug(' '), '')

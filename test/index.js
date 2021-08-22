@@ -1,66 +1,9 @@
-var test = require('tape')
-var GithubSlugger = require('../')
+const test = require('tape')
+const GithubSlugger = require('../')
 
 require('./test-static')
 
-test('simple stuff', function (t) {
-  var slugger = new GithubSlugger()
-
-  t.equals(GithubSlugger().slug('foo'), 'foo', 'should work without new')
-  t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
-
-  // See `1-basic-usage.md`
-  t.equals(slugger.slug('foo'), 'foo')
-  t.equals(slugger.slug('foo bar'), 'foo-bar')
-  t.equals(slugger.slug('foo'), 'foo-1')
-
-  // See `2-camel-case.md`
-  slugger.reset()
-  t.equals(slugger.slug('foo'), 'foo')
-  // Note: GH doesn’t support `maintaincase`, so the actual values are commented below.
-  t.equals(slugger.slug('fooCamelCase', true), 'fooCamelCase') // foocamelcase
-  t.equals(slugger.slug('fooCamelCase'), 'foocamelcase') // foocamelcase-1
-
-  // See `3-prototype.md`
-  slugger.reset()
-  t.equals(slugger.slug('__proto__'), '__proto__')
-  t.equals(slugger.slug('__proto__'), '__proto__-1')
-  t.equals(slugger.slug('hasOwnProperty', true), 'hasOwnProperty') // hasownproperty
-  t.equals(slugger.slug('foo'), 'foo')
-
-  t.end()
-})
-
-test('matching slugs', function (t) {
-  var slugger = new GithubSlugger()
-
-  // See `4-matching-slugs-basic.md`
-  t.equals(slugger.slug('foo'), 'foo')
-  t.equals(slugger.slug('foo'), 'foo-1')
-  t.equals(slugger.slug('foo 1'), 'foo-1-1')
-  t.equals(slugger.slug('foo-1'), 'foo-1-2')
-  t.equals(slugger.slug('foo'), 'foo-2')
-
-  // See `5-matching-slugs-again.md`
-  slugger.reset()
-  t.equals(slugger.slug('foo-1'), 'foo-1')
-  t.equals(slugger.slug('foo'), 'foo')
-  t.equals(slugger.slug('foo'), 'foo-2')
-
-  t.end()
-})
-
-test('github test cases', function (t) {
-  var slugger = new GithubSlugger()
-
-  testCases.forEach(function (test) {
-    t.equals(slugger.slug(test.text), test.slug, test.mesg)
-  })
-
-  t.end()
-})
-
-var testCases = [
+const testCases = [
   // See `6-characters.md`
   {
     mesg: 'allows a dash',
@@ -209,3 +152,60 @@ var testCases = [
     slug: 'ok_hand-hatched_chick-two-in-a-row'
   }
 ]
+
+test('simple stuff', function (t) {
+  const slugger = new GithubSlugger()
+
+  t.equals(GithubSlugger().slug('foo'), 'foo', 'should work without new')
+  t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
+
+  // See `1-basic-usage.md`
+  t.equals(slugger.slug('foo'), 'foo')
+  t.equals(slugger.slug('foo bar'), 'foo-bar')
+  t.equals(slugger.slug('foo'), 'foo-1')
+
+  // See `2-camel-case.md`
+  slugger.reset()
+  t.equals(slugger.slug('foo'), 'foo')
+  // Note: GH doesn’t support `maintaincase`, so the actual values are commented below.
+  t.equals(slugger.slug('fooCamelCase', true), 'fooCamelCase') // foocamelcase
+  t.equals(slugger.slug('fooCamelCase'), 'foocamelcase') // foocamelcase-1
+
+  // See `3-prototype.md`
+  slugger.reset()
+  t.equals(slugger.slug('__proto__'), '__proto__')
+  t.equals(slugger.slug('__proto__'), '__proto__-1')
+  t.equals(slugger.slug('hasOwnProperty', true), 'hasOwnProperty') // hasownproperty
+  t.equals(slugger.slug('foo'), 'foo')
+
+  t.end()
+})
+
+test('matching slugs', function (t) {
+  const slugger = new GithubSlugger()
+
+  // See `4-matching-slugs-basic.md`
+  t.equals(slugger.slug('foo'), 'foo')
+  t.equals(slugger.slug('foo'), 'foo-1')
+  t.equals(slugger.slug('foo 1'), 'foo-1-1')
+  t.equals(slugger.slug('foo-1'), 'foo-1-2')
+  t.equals(slugger.slug('foo'), 'foo-2')
+
+  // See `5-matching-slugs-again.md`
+  slugger.reset()
+  t.equals(slugger.slug('foo-1'), 'foo-1')
+  t.equals(slugger.slug('foo'), 'foo')
+  t.equals(slugger.slug('foo'), 'foo-2')
+
+  t.end()
+})
+
+test('github test cases', function (t) {
+  const slugger = new GithubSlugger()
+
+  testCases.forEach(function (test) {
+    t.equals(slugger.slug(test.text), test.slug, test.mesg)
+  })
+
+  t.end()
+})

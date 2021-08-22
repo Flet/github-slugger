@@ -1,13 +1,13 @@
-var emoji = require('emoji-regex')
+const emoji = require('emoji-regex')
 
 module.exports = BananaSlug
 
-var own = Object.hasOwnProperty
-var whitespace = /\s/g
-var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
+const own = Object.hasOwnProperty
+const whitespace = /\s/g
+const specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
 
 function BananaSlug () {
-  var self = this
+  const self = this
 
   if (!(self instanceof BananaSlug)) return new BananaSlug()
 
@@ -21,9 +21,9 @@ function BananaSlug () {
  * @return {string}       A unique slug string
  */
 BananaSlug.prototype.slug = function (value, maintainCase) {
-  var self = this
-  var slug = slugger(value, maintainCase === true)
-  var originalSlug = slug
+  const self = this
+  let slug = slugger(value, maintainCase === true)
+  const originalSlug = slug
 
   while (own.call(self.occurrences, slug)) {
     self.occurrences[originalSlug]++
