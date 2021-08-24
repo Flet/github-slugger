@@ -1,12 +1,12 @@
 # github-slugger
 
 [![npm][npm-image]][npm-url]
-[![travis][travis-image]][travis-url]
+[![Build][build-badge]][build]
 
 [npm-image]: https://img.shields.io/npm/v/github-slugger.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/github-slugger
-[travis-image]: https://img.shields.io/travis/Flet/github-slugger.svg?style=flat-square
-[travis-url]: https://travis-ci.org/Flet/github-slugger
+[build-badge]: https://github.com/Flet/github-slugger/workflows/main/badge.svg
+[build]: https://github.com/Flet/github-slugger/actions
 
 Generate a slug just like GitHub does for markdown headings. It also ensures slugs are unique in the same way GitHub does it. The overall goal of this package is to emulate the way GitHub handles generating markdown heading anchors as close as possible.
 
