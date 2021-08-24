@@ -38,13 +38,19 @@ slugger.slug('bar')
 slugger.slug('foo')
 // returns 'foo-2'
 
+slugger.slug('Привет non-latin 你好')
+// returns 'привет-non-latin-你好'
+
+slugger.slug('😄 emoji')
+// returns '-emoji'
+
 slugger.reset()
 
 slugger.slug('foo')
 // returns 'foo'
-
 ```
-Check `test/index.js` for more examples.
+
+Check `test/fixtures.json` for more examples.
 
 If you need, you can also use the underlying implementation which does not keep
 track of the previously slugged strings (not recommended):
