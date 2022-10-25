@@ -16,7 +16,7 @@
   ],
   "devDependencies": {
     "@octokit/rest": "^19.0.0",
-    "@unicode/unicode-12.1.0": "^1.0.0",
+    "@unicode/unicode-13.0.0": "^1.0.0",
     "hast-util-select": "^5.0.0",
     "mdast-util-gfm": "^2.0.0",
     "mdast-util-to-markdown": "^1.0.0",

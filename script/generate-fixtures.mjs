@@ -15,7 +15,7 @@ if (!ghToken) {
 }
 
 const octo = new Octokit({ auth: 'token ' + ghToken })
-const categoryBase = new URL('../node_modules/@unicode/unicode-12.1.0/General_Category/', import.meta.url)
+const categoryBase = new URL('../node_modules/@unicode/unicode-13.0.0/General_Category/', import.meta.url)
 
 // Take up to N samples from each category.
 const samples = 400
