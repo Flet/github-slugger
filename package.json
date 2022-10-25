@@ -15,12 +15,12 @@
     "regex.js"
   ],
   "devDependencies": {
-    "@octokit/rest": "^18.0.0",
+    "@octokit/rest": "^19.0.0",
     "@unicode/unicode-12.1.0": "^1.0.0",
     "hast-util-select": "^5.0.0",
-    "mdast-util-gfm": "^1.0.0",
+    "mdast-util-gfm": "^2.0.0",
     "mdast-util-to-markdown": "^1.0.0",
-    "node-fetch": "^2.0.0",
+    "node-fetch": "^3.0.0",
     "nyc": "^15.0.0",
     "regenerate": "^1.0.0",
     "rehype-parse": "^8.0.0",
