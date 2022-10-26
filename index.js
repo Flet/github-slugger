@@ -1,50 +1,55 @@
-const regex = require('./regex.js')
-
-module.exports = BananaSlug
+import { regex } from './regex.js'
 
 const own = Object.hasOwnProperty
 
-function BananaSlug () {
-  const self = this
-
-  if (!(self instanceof BananaSlug)) return new BananaSlug()
-
-  self.reset()
-}
-
 /**
- * Generate a unique slug.
- * @param  {string} value String of text to slugify
- * @param  {boolean} [false] Keep the current case, otherwise make all lowercase
- * @return {string}       A unique slug string
+ * Slugger.
  */
-BananaSlug.prototype.slug = function (value, maintainCase) {
-  const self = this
-  let slug = slugger(value, maintainCase === true)
-  const originalSlug = slug
-
-  while (own.call(self.occurrences, slug)) {
-    self.occurrences[originalSlug]++
-    slug = originalSlug + '-' + self.occurrences[originalSlug]
+export default class BananaSlug {
+  /**
+   * Create a new slug class.
+   */
+  constructor () {
+    this.reset()
   }
 
-  self.occurrences[slug] = 0
+  /**
+   * Generate a unique slug.
+   *
+   * @param  {string} value
+   *   String of text to slugify
+   * @param  {boolean} [maintainCase=false]
+   *   Keep the current case, otherwise make all lowercase
+   * @return {string}
+   *   A unique slug string
+   */
+  slug (value, maintainCase) {
+    const self = this
+    let result = slug(value, maintainCase === true)
+    const originalSlug = result
 
-  return slug
+    while (own.call(self.occurrences, result)) {
+      self.occurrences[originalSlug]++
+      result = originalSlug + '-' + self.occurrences[originalSlug]
+    }
+
+    self.occurrences[result] = 0
+
+    return result
+  }
+
+  /**
+   * Reset - Forget all previous slugs
+   *
+   * @return void
+   */
+  reset () {
+    this.occurrences = Object.create(null)
+  }
 }
 
-/**
- * Reset - Forget all previous slugs
- * @return void
- */
-BananaSlug.prototype.reset = function () {
-  this.occurrences = Object.create(null)
-}
-
-function slugger (string, maintainCase) {
+export function slug (string, maintainCase) {
   if (typeof string !== 'string') return ''
   if (!maintainCase) string = string.toLowerCase()
   return string.replace(regex, '').replace(/ /g, '-')
 }
-
-BananaSlug.slug = slugger

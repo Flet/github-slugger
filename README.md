@@ -23,8 +23,9 @@ npm install github-slugger
 ## Usage
 
 ```js
-var GithubSlugger = require('github-slugger')
-var slugger = new GithubSlugger()
+import GithubSlugger from 'github-slugger'
+
+const slugger = new GithubSlugger()
 
 slugger.slug('foo')
 // returns 'foo'
@@ -56,7 +57,7 @@ If you need, you can also use the underlying implementation which does not keep
 track of the previously slugged strings (not recommended):
 
 ```js
-var slug = require('github-slugger').slug;
+import GithubSlugger, {slug} from 'github-slugger'
 
 slug('foo bar baz')
 // returns 'foo-bar-baz'

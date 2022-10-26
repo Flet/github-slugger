@@ -10,6 +10,7 @@
   "bugs": {
     "url": "https://github.com/Flet/github-slugger/issues"
   },
+  "type": "module",
   "files": [
     "index.js",
     "regex.js"
