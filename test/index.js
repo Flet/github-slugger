@@ -1,9 +1,9 @@
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 import test from 'tape'
 import GithubSlugger, { slug } from '../index.js'
 
 const fixtures = JSON.parse(
-  String(await fs.readFile(
+  String(fs.readFileSync(
     new URL('fixtures.json', import.meta.url)
   ))
 )
