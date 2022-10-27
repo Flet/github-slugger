@@ -1,13 +1,16 @@
-const test = require('tape')
-const GithubSlugger = require('../')
-const gist = require('./fixtures.json')
+import fs from 'node:fs'
+import test from 'tape'
+import GithubSlugger, { slug } from '../index.js'
 
-require('./test-static')
+const fixtures = JSON.parse(
+  String(fs.readFileSync(
+    new URL('fixtures.json', import.meta.url)
+  ))
+)
 
 test('simple stuff', function (t) {
   const slugger = new GithubSlugger()
 
-  t.equals(GithubSlugger().slug('foo'), 'foo', 'should work without new')
   t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
 
   // Note: GH doesn’t support `maintaincase`, so the actual values are commented below.
@@ -17,10 +20,17 @@ test('simple stuff', function (t) {
   t.end()
 })
 
+test('static method', function (t) {
+  t.equals(slug('foo'), 'foo')
+  t.equals(slug('foo bar'), 'foo-bar')
+  t.equals(slug('foo'), 'foo') // idem potent
+  t.end()
+})
+
 test('fixtures', function (t) {
   const slugger = new GithubSlugger()
 
-  gist.forEach((d) => {
+  fixtures.forEach((d) => {
     t.equals(slugger.slug(d.input), d.expected, d.name)
   })
 
