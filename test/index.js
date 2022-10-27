@@ -9,7 +9,7 @@ const fixtures = JSON.parse(
   ))
 )
 
-test('simple stuff', function (t) {
+test('basic', function (t) {
   const slugger = new GithubSlugger()
 
   // @ts-expect-error: not allowed by types but handled gracefully in the code.
@@ -19,13 +19,15 @@ test('simple stuff', function (t) {
   t.equals(slugger.slug('fooCamelCase', true), 'fooCamelCase', 'should support `maintainCase`') // foocamelcase
   t.equals(slugger.slug('fooCamelCase'), 'foocamelcase', 'should support `maintainCase` (reference)') // foocamelcase-1
 
+  t.equals(slugger.slug('asd'), 'asd', 'should slug')
+  t.equals(slugger.slug('asd'), 'asd-1', 'should create unique slugs for repeated values')
+
   t.end()
 })
 
 test('static method', function (t) {
-  t.equals(slug('foo'), 'foo')
-  t.equals(slug('foo bar'), 'foo-bar')
-  t.equals(slug('foo'), 'foo') // idem potent
+  t.equals(slug('foo'), 'foo', 'should slug')
+  t.equals(slug('foo'), 'foo', 'should create same slugs for repeated values')
   t.end()
 })
 
