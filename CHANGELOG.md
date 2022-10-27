@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0 2022-10-27
+* Use ESM
+  **breaking**: please read [this guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
+* Add types
+  **breaking**: tiny chance of breaking, use a new version of TS and it’ll work
+
 ## 1.5.0 2022-10-25
 * Update Unicode to 13, to match GH
 
