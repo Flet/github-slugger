@@ -37,9 +37,8 @@ let index = -1
 // Add code points to strip.
 while (++index < ranges.length) {
   const name = ranges[index]
-  const fp = `./${name}/code-points.js`
   /** @type {{default: Array<number>}} */
-  const { default: codePoints } = await import(new URL(fp, categoryBase).href)
+  const { default: codePoints } = await import(new URL(name + '/code-points.js', categoryBase).href)
 
   generator.add(codePoints)
 }
