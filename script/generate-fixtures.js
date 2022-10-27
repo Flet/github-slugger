@@ -70,6 +70,7 @@ main()
 
 async function main () {
   const files = await fs.readdir(categoryBase)
+  /** @type {Array<{name: string, input: string, markdownOverwrite?: string, expected?: string}>} */
   const tests = [...otherTests]
   let index = -1
 
@@ -86,7 +87,9 @@ async function main () {
     if (name === 'Other') continue
 
     const fp = `./${name}/code-points.js`
-    const { default: codePoints } = await import(new URL(fp, categoryBase))
+
+    /** @type {{default: Array<number>}} */
+    const { default: codePoints } = await import(new URL(fp, categoryBase).href)
     const subs = []
 
     let n = -1
@@ -138,7 +141,10 @@ async function main () {
   const anchors = selectAll('h1 .anchor', markdownBody)
 
   anchors.forEach((node, i) => {
-    tests[i].expected = node.properties.href.slice(1)
+    const href = node.properties.href;
+    if (typeof href === 'string') {
+      tests[i].expected = href.slice(1)
+    }
   })
 
   await fs.writeFile(new URL('../test/fixtures.json', import.meta.url), JSON.stringify(tests, null, 2) + '\n')

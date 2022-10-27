@@ -10,11 +10,16 @@ export default class BananaSlug {
    * Create a new slug class.
    */
   constructor () {
-    this.reset()
+    /** @type {Record<string, number>} */
+    this.occurrences = Object.create(null)
   }
 
   /**
    * Generate a unique slug.
+  *
+  * Track previously generated slugs: repeated calls with the same value
+  * will result in different slugs.
+  * Use the `slug` function to get same slugs.
    *
    * @param  {string} value
    *   String of text to slugify
@@ -48,8 +53,22 @@ export default class BananaSlug {
   }
 }
 
-export function slug (string, maintainCase) {
-  if (typeof string !== 'string') return ''
-  if (!maintainCase) string = string.toLowerCase()
-  return string.replace(regex, '').replace(/ /g, '-')
+/**
+ * Generate a slug.
+ *
+ * Does not track previously generated slugs: repeated calls with the same value
+ * will result in the exact same slug.
+ * Use the `GithubSlugger` class to get unique slugs.
+ *
+ * @param  {string} value
+ *   String of text to slugify
+ * @param  {boolean} [maintainCase=false]
+ *   Keep the current case, otherwise make all lowercase
+ * @return {string}
+ *   A unique slug string
+ */
+export function slug (value, maintainCase) {
+  if (typeof value !== 'string') return ''
+  if (!maintainCase) value = value.toLowerCase()
+  return value.replace(regex, '').replace(/ /g, '-')
 }

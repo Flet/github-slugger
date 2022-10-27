@@ -40,7 +40,8 @@ async function main () {
   while (++index < ranges.length) {
     const name = ranges[index]
     const fp = `./${name}/code-points.js`
-    const { default: codePoints } = await import(new URL(fp, categoryBase))
+    /** @type {{default: Array<number>}} */
+    const { default: codePoints } = await import(new URL(fp, categoryBase).href)
 
     generator.add(codePoints)
   }
