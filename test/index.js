@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import test from 'tape'
 import GithubSlugger, { slug } from '../index.js'
 
+/** @type {Array<{name: string, input: string, markdownOverwrite?: string, expected: string}>} */
 const fixtures = JSON.parse(
   String(fs.readFileSync(
     new URL('fixtures.json', import.meta.url)
@@ -11,6 +12,7 @@ const fixtures = JSON.parse(
 test('simple stuff', function (t) {
   const slugger = new GithubSlugger()
 
+  // @ts-expect-error: not allowed by types but handled gracefully in the code.
   t.equals(slugger.slug(1), '', 'should return empty string for non-strings')
 
   // Note: GH doesn’t support `maintaincase`, so the actual values are commented below.

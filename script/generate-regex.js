@@ -1,5 +1,6 @@
 import { promises as fs } from 'node:fs'
 import regenerate from 'regenerate'
+// @ts-expect-error: untyped
 import alphabetics from '@unicode/unicode-13.0.0/Binary_Property/Alphabetic/code-points.js'
 
 const categoryBase = new URL('../node_modules/@unicode/unicode-13.0.0/General_Category/', import.meta.url)
@@ -40,7 +41,8 @@ async function main () {
   while (++index < ranges.length) {
     const name = ranges[index]
     const fp = `./${name}/code-points.js`
-    const { default: codePoints } = await import(new URL(fp, categoryBase))
+    /** @type {{default: Array<number>}} */
+    const { default: codePoints } = await import(new URL(fp, categoryBase).href)
 
     generator.add(codePoints)
   }

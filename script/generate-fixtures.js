@@ -70,6 +70,7 @@ main()
 
 async function main () {
   const files = await fs.readdir(categoryBase)
+  /** @type {Array<{name: string, input: string, markdownOverwrite?: string, expected?: string}>} */
   const tests = [...otherTests]
   let index = -1
 
@@ -86,7 +87,10 @@ async function main () {
     if (name === 'Other') continue
 
     const fp = `./${name}/code-points.js`
-    const { default: codePoints } = await import(new URL(fp, categoryBase))
+
+    /** @type {{default: Array<number>}} */
+    const { default: codePoints } = await import(new URL(fp, categoryBase).href)
+    /** @type {Array<number>} */
     const subs = []
 
     let n = -1
@@ -112,7 +116,11 @@ async function main () {
     }
   })
 
-  const file = gistResult.data.files[filename]
+  const file = (gistResult.data.files || {})[filename]
+
+  if (!file || !gistResult.data.html_url || !gistResult.data.id) {
+    throw new Error('Something weird happened contacting GitHub')
+  }
 
   if (!file.language) {
     throw new Error('The generated markdown was seen as binary data instead of text by GitHub. This is likely because there are weird characters (such as control characters or lone surrogates) in it')
@@ -138,7 +146,10 @@ async function main () {
   const anchors = selectAll('h1 .anchor', markdownBody)
 
   anchors.forEach((node, i) => {
-    tests[i].expected = node.properties.href.slice(1)
+    const href = (node.properties || {}).href
+    if (typeof href === 'string') {
+      tests[i].expected = href.slice(1)
+    }
   })
 
   await fs.writeFile(new URL('../test/fixtures.json', import.meta.url), JSON.stringify(tests, null, 2) + '\n')
