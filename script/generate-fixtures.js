@@ -66,91 +66,85 @@ const otherTests = [
   { name: 'Gemoji (4)', input: ':ok_hand: :hatched_chick: Two in a row' }
 ]
 
-main()
+const files = await fs.readdir(categoryBase)
+/** @type {Array<{name: string, input: string, markdownOverwrite?: string, expected?: string}>} */
+const tests = [...otherTests]
+let index = -1
 
-async function main () {
-  const files = await fs.readdir(categoryBase)
-  /** @type {Array<{name: string, input: string, markdownOverwrite?: string, expected?: string}>} */
-  const tests = [...otherTests]
-  let index = -1
+// Create a test case with a bunch of examples.
+while (++index < files.length) {
+  const name = files[index]
 
-  // Create a test case with a bunch of examples.
-  while (++index < files.length) {
-    const name = files[index]
+  if (name === 'index.js') continue
 
-    if (name === 'index.js') continue
+  // These result in Git(Hub) thinking it’s a binary file.
+  if (name === 'Control' || name === 'Surrogate') continue
 
-    // These result in Git(Hub) thinking it’s a binary file.
-    if (name === 'Control' || name === 'Surrogate') continue
+  // This prevents GH from rendering markdown to HTML.
+  if (name === 'Other') continue
 
-    // This prevents GH from rendering markdown to HTML.
-    if (name === 'Other') continue
+  /** @type {{default: Array<number>}} */
+  const { default: codePoints } = await import(new URL(name + '/code-points.js', categoryBase).href)
+  /** @type {Array<number>} */
+  const subs = []
 
-    const fp = `./${name}/code-points.js`
+  let n = -1
 
-    /** @type {{default: Array<number>}} */
-    const { default: codePoints } = await import(new URL(fp, categoryBase).href)
-    /** @type {Array<number>} */
-    const subs = []
-
-    let n = -1
-
-    while (++n < samples) {
-      subs.push(codePoints[Math.floor(codePoints.length / samples * n)])
-    }
-
-    subs.push(codePoints[codePoints.length - 1])
-
-    tests.push({ name, input: 'a' + [...new Set(subs)].map(d => String.fromCodePoint(d)).join(' ') + 'b' })
+  while (++n < samples) {
+    subs.push(codePoints[Math.floor(codePoints.length / samples * n)])
   }
 
-  // Create a Gist.
-  const filename = 'readme.md'
-  const gistResult = await octo.gists.create({
-    files: {
-      [filename]: {
-        content: tests.map(d => {
-          return d.markdownOverwrite || toMarkdown({ type: 'heading', depth: 1, children: [{ type: 'text', value: d.input }] }, { extensions: [gfmToMarkdown()] })
-        }).join('\n\n')
-      }
-    }
-  })
+  subs.push(codePoints[codePoints.length - 1])
 
-  const file = (gistResult.data.files || {})[filename]
-
-  if (!file || !gistResult.data.html_url || !gistResult.data.id) {
-    throw new Error('Something weird happened contacting GitHub')
-  }
-
-  if (!file.language) {
-    throw new Error('The generated markdown was seen as binary data instead of text by GitHub. This is likely because there are weird characters (such as control characters or lone surrogates) in it')
-  }
-
-  // Fetch the rendered page.
-  const response = await fetch(gistResult.data.html_url, {
-    headers: { Authorization: 'token ' + ghToken }
-  })
-
-  const doc = await response.text()
-
-  // Remove the Gist.
-  await octo.gists.delete({ gist_id: gistResult.data.id })
-
-  const tree = unified().use(rehypeParse).parse(doc)
-  const markdownBody = select('.markdown-body', tree)
-
-  if (!markdownBody) {
-    throw new Error('The generated markdown could not be rendered by GitHub as HTML. This is likely because there are weird characters in it')
-  }
-
-  const anchors = selectAll('h1 .anchor', markdownBody)
-
-  anchors.forEach((node, i) => {
-    const href = (node.properties || {}).href
-    if (typeof href === 'string') {
-      tests[i].expected = href.slice(1)
-    }
-  })
-
-  await fs.writeFile(new URL('../test/fixtures.json', import.meta.url), JSON.stringify(tests, null, 2) + '\n')
+  tests.push({ name, input: 'a' + [...new Set(subs)].map(d => String.fromCodePoint(d)).join(' ') + 'b' })
 }
+
+// Create a Gist.
+const filename = 'readme.md'
+const gistResult = await octo.gists.create({
+  files: {
+    [filename]: {
+      content: tests.map(d => {
+        return d.markdownOverwrite || toMarkdown({ type: 'heading', depth: 1, children: [{ type: 'text', value: d.input }] }, { extensions: [gfmToMarkdown()] })
+      }).join('\n\n')
+    }
+  }
+})
+
+const file = (gistResult.data.files || {})[filename]
+
+if (!file || !gistResult.data.html_url || !gistResult.data.id) {
+  throw new Error('Something weird happened contacting GitHub')
+}
+
+if (!file.language) {
+  throw new Error('The generated markdown was seen as binary data instead of text by GitHub. This is likely because there are weird characters (such as control characters or lone surrogates) in it')
+}
+
+// Fetch the rendered page.
+const response = await fetch(gistResult.data.html_url, {
+  headers: { Authorization: 'token ' + ghToken }
+})
+
+const doc = await response.text()
+
+// Remove the Gist.
+await octo.gists.delete({ gist_id: gistResult.data.id })
+
+const tree = unified().use(rehypeParse).parse(doc)
+const markdownBody = select('.markdown-body', tree)
+
+if (!markdownBody) {
+  throw new Error('The generated markdown could not be rendered by GitHub as HTML. This is likely because there are weird characters in it')
+}
+
+const anchors = selectAll('h1 .anchor', markdownBody)
+
+anchors.forEach((node, i) => {
+  const href = (node.properties || {}).href
+  if (typeof href === 'string') {
+    tests[i].expected = href.slice(1)
+  }
+})
+
+await fs.writeFile(new URL('../test/fixtures.json', import.meta.url), JSON.stringify(tests, null, 2) + '\n')
