@@ -51,7 +51,7 @@ slugger.slug('foo')
 // returns 'foo'
 ```
 
-Check `test/fixtures.json` for more examples.
+Check [`test/fixtures.json`](test/fixtures.json) for more examples.
 
 If you need, you can also use the underlying implementation which does not keep
 track of the previously slugged strings (not recommended):
