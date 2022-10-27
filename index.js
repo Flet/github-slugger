@@ -20,7 +20,7 @@ export default class BananaSlug {
   /**
    * Generate a unique slug.
   *
-  * Track previously generated slugs: repeated calls with the same value
+  * Tracks previously generated slugs: repeated calls with the same value
   * will result in different slugs.
   * Use the `slug` function to get same slugs.
    *
