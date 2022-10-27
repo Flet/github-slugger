@@ -90,6 +90,7 @@ async function main () {
 
     /** @type {{default: Array<number>}} */
     const { default: codePoints } = await import(new URL(fp, categoryBase).href)
+    /** @type {Array<number>} */
     const subs = []
 
     let n = -1
@@ -115,7 +116,11 @@ async function main () {
     }
   })
 
-  const file = gistResult.data.files[filename]
+  const file = (gistResult.data.files || {})[filename]
+
+  if (!file || !gistResult.data.html_url || !gistResult.data.id) {
+    throw new Error('Something weird happened contacting GitHub')
+  }
 
   if (!file.language) {
     throw new Error('The generated markdown was seen as binary data instead of text by GitHub. This is likely because there are weird characters (such as control characters or lone surrogates) in it')
@@ -141,7 +146,7 @@ async function main () {
   const anchors = selectAll('h1 .anchor', markdownBody)
 
   anchors.forEach((node, i) => {
-    const href = node.properties.href;
+    const href = (node.properties || {}).href
     if (typeof href === 'string') {
       tests[i].expected = href.slice(1)
     }

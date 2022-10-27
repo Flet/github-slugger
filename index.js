@@ -11,7 +11,10 @@ export default class BananaSlug {
    */
   constructor () {
     /** @type {Record<string, number>} */
-    this.occurrences = Object.create(null)
+    // eslint-disable-next-line no-unused-expressions
+    this.occurrences
+
+    this.reset()
   }
 
   /**
