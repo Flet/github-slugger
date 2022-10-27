@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.0 2022-10-25
+* Update Unicode to 13, to match GH
+
 ## 1.4.0 2021-08-24
 * Fix to match GitHub’s algorithm on unicode
 
