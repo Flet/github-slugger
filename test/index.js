@@ -31,6 +31,14 @@ test('static method', function (t) {
   t.end()
 })
 
+test('emojis', function (t) {
+  const slugger = new GithubSlugger()
+
+  t.equals(slugger.slug('📝'), '', 'should remove emoji')
+  t.equals(slugger.slug('🔨'), '', 'should remove this emoji too')
+  t.end()
+})
+
 test('fixtures', function (t) {
   const slugger = new GithubSlugger()
 
