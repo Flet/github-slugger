@@ -12,8 +12,16 @@ export default class BananaSlug {
   constructor (previousOccurrences) {
     /** @type {Record<string, number>} */
     // eslint-disable-next-line no-unused-expressions
-    this.occurrences = previousOccurrences ? previousOccurrences.reduce((obj, key) => ({ ...obj, [key]: 1 }), {}) : Object.create(null)
-
+    if(previousOccurrences){
+      this.occurrences = previousOccurrences.reduce((obj, slug) => {
+        const strippedSlug = slug.replace(/-\d+$/, '');
+        obj[strippedSlug] = (obj[strippedSlug] || 0) + 1;
+        return obj;
+      }, {});
+    }
+    else {
+      this.occurrences
+    }
     this.reset()
   }
 
