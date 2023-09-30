@@ -9,10 +9,10 @@ export default class BananaSlug {
   /**
    * Create a new slug class.
    */
-  constructor () {
+  constructor (previousOccurrences) {
     /** @type {Record<string, number>} */
     // eslint-disable-next-line no-unused-expressions
-    this.occurrences
+    this.occurrences = previousOccurrences ? previousOccurrences.reduce((obj, key) => ({ ...obj, [key]: 1 }), {}) : Object.create(null)
 
     this.reset()
   }
